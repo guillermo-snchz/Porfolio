@@ -6,4 +6,11 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="TagHelpers\**" />
+    <Content Remove="TagHelpers\**" />
+    <EmbeddedResource Remove="TagHelpers\**" />
+    <None Remove="TagHelpers\**" />
+  </ItemGroup>
+
 </Project>

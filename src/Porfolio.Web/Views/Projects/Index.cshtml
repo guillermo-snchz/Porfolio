@@ -14,31 +14,54 @@
 }
 else
 {
+	@section Styles{
+		<link rel="stylesheet" href="~/css/section/projects.css">
+	}
+
+	<div class="row justify-content-end mb-2">
+		<div class="col-auto">
+			<a asp-action="ReloadFromGithub" class="btn btn-sm btn-outline-secondary">
+				<i class="bi bi-arrow-clockwise"></i> Actualizar proyectos desde Github
+			</a>
+		</div>
+	</div>
+
 	<div class="row row-cols-lg-auto gap-3">
 		@foreach (var project in Model.Projects!)
 		{
-			<div class="col">
-				<div class="card">
-					<div class="card-body">
-						<div class="d-flex flex-row">
-							<h5 class="card-title">@project.Name</h5>
-							<span>Última actualización: @project.UpdatedAt</span>
-						</div>
-						<div class="d-flex flex-column gap-2">
-							<p class="card-text">@project.Description</p>
+			<div class="col-sm-6 col-md-4 col-lg-3 d-flex">
 
-							<div class="d-flex flex-wrap gap-1">
-								@foreach (var language in project.Languages!)
-								{
-									<language-badge language="@language" />
-								}
-							</div>
+				<div class="project-card shadow p-4 rounded-4 bg-white border w-100 d-flex flex-column gap-2">
 
-							<a href="@project.HtmlUrl" class="btn btn-primary btn-sm align-self-end" target="_blank">Ir al repositorio</a>
-						</div>
+					<h5 class="mb-0 fw-bold">@project.Name</h5>
+
+					<p class="text-muted small flex-grow-1">@(project.Description ?? "Sin descripción")</p>
+
+
+					<div class="d-flex flex-wrap gap-1 mb-3">
+						@foreach (var language in project.Languages!)
+						{
+							string langClass = language.ToLower() switch
+							{
+								"css" => "tech-css",
+								"javascript" => "tech-javascript",
+								"html" => "tech-html",
+								"c#" => "tech-csharp",
+								_ => "bg-secondary"
+							};
+							<span class="badge tech-badge @langClass">@language</span>
+						}
+					</div>
+
+					<small class="text-end text-muted mb-2	">Actualizado el @(project.UpdatedAt?.ToString("dd/MM/yyyy") ?? "Fecha no disponible")</small>
+
+
+					<div class="d-flex justify-content-end">
+						<a href="@project.HtmlUrl" class="btn btn-primary btn-sm mt-auto" target="_blank">Ir al repositorio</a>
 					</div>
 				</div>
 			</div>
 		}
 	</div>
+
 }

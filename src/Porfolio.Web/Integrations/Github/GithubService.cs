@@ -1,6 +1,8 @@
-﻿using Microsoft.Extensions.Options;
-using System.Net.Http.Headers;
+﻿using System.Net.Http.Headers;
 using System.Text.Json;
+using Microsoft.Extensions.Options;
+using Porfolio.Web.Core;
+using Porfolio.Web.Services.MemoryCache;
 
 namespace Porfolio.Web.Integrations.Github;
 
@@ -9,7 +11,9 @@ public class GithubService : IGithubService
     private readonly HttpClient _httpClient;
     private readonly GithubOptions _options;
 
-    public GithubService(HttpClient httpClient, IOptions<GithubOptions> options)
+    private readonly IApiCacheService _apiCacheService;
+
+    public GithubService(HttpClient httpClient, IOptions<GithubOptions> options, IApiCacheService apiCacheService)
     {
         _httpClient = httpClient;
         _options = options.Value;
@@ -19,6 +23,8 @@ public class GithubService : IGithubService
         {
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("token", _options.Token);
         }
+
+        _apiCacheService = apiCacheService;
     }
 
     public async Task<IEnumerable<GithubProjectDto>?> GetPublicRepositoriesAsync()
@@ -32,24 +38,25 @@ public class GithubService : IGithubService
             var repos = JsonSerializer.Deserialize<List<GithubProjectDto>>(content,
                 new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
-            if (repos is not null)
+            if (repos is null)
             {
-                await Parallel.ForEachAsync(repos, async (repo, cancellationToken) =>
-                {
-                    var languages = await GetLanguagesFromRepositoryAsync(repo.Name!, cancellationToken);
-                    repo.Languages = languages.ToArray();
-                });
-
-                return repos.Take(_options.MaxRepos);
+                return null;
             }
 
-            return repos?.Take(_options.MaxRepos) ?? [];
+            await Parallel.ForEachAsync(repos, async (repo, cancellationToken) =>
+            {
+                var languages = await GetLanguagesFromRepositoryAsync(repo.Name!, cancellationToken);
+                repo.Languages = [.. languages];
+            });
+
+            _apiCacheService.Set("GithubProjects", repos, TimeSpan.FromHours(1));
+
+            return repos.Take(_options.MaxRepos);
         }
         catch
         {
             return null;
         }
-
     }
 
     private async Task<IEnumerable<string>> GetLanguagesFromRepositoryAsync(string repoName, CancellationToken cancellationToken)
@@ -60,10 +67,11 @@ public class GithubService : IGithubService
 
             response.EnsureSuccessStatusCode();
 
-            var content = await response.Content.ReadAsStringAsync();
+            string? content = await response.Content.ReadAsStringAsync(cancellationToken);
 
-            var languages = JsonSerializer.Deserialize<Dictionary<string, int>>(content,
-                new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+            Dictionary<string, int>? languages = JsonSerializer.Deserialize<Dictionary<string, int>>(
+                content,
+                Tools.GetJsonSerializerOptions());
 
             return languages?.Keys.ToArray() ?? [];
         }
@@ -72,4 +80,6 @@ public class GithubService : IGithubService
             return [];
         }
     }
+
+
 }
