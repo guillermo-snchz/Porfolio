@@ -2,13 +2,35 @@
 	ViewData["Title"] = "Inicio";
 }
 
-<div class="text-center">
-	<h1 class="display-4">¡Hola, soy Guillermo!</h1>
-	<p class="lead">Desarrollador .NET apasionado por crear soluciones modernas y eficientes.</p>
-	@* <img src="~/img/perfil.jpg" alt="Foto de perfil" class="rounded-circle shadow" style="width: 150px; height: 150px; object-fit: cover;" /> *@
+@section Styles {
+	<link rel="stylesheet" href="~/css/section/home.css">
+}
 
-	@* <div class="mt-4">
-		<a class="btn btn-primary btn-lg me-2" href="/Projects">Ver proyectos</a>
-		<a class="btn btn-outline-secondary btn-lg" href="/Contact">Contáctame</a>
-	</div> *@
-</div>
+<section class="hero">
+	<div class="profile-card dark">
+		<div class="profile-image">
+			<img src="~/files/me.jpg" alt="Mi foto" />
+		</div>
+		<div class="profile-info">
+			<h1>Bienvenido a mi porfolio.</h1>
+			<p>
+				Me llamo Guillermo Sánchez, tengo mas de 3 años de experiencia en desarrollo de aplicaciones.
+				<br />
+				Principalmente he trabajado con tecnologías .NET y bases de datos relacionales para elaborar soluciones para entornos web.
+				Estuve en la universidad haciendo ingeniería de software pero no la finalicé. 
+				Después de una experiencia a través de una beca, me gradué en el CFGS de Desarrollo de aplicaciones multiplataforma.
+				<br /><br />
+				Navega por la web para conocer más.
+			</p>
+			<a class="btn btn-secondary align-self-end" href="~/files/cv-es.pdf" target="_blank">
+				@* <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20" id="Business-User-Curriculum--Streamline-Core" height="14" width="14">
+					<desc>Business User Curriculum Streamline Icon: https://streamlinehq.com</desc>
+					<g id="business-user-curriculum">
+						<path id="Vector" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" d="M4.09766 3.65061c0 0.63533 0.51503 1.15037 1.15036 1.15037 0.16062 0 0.31354 -0.03292 0.45241 -0.09237 0.41042 -0.17573 0.69796 -0.58328 0.69796 -1.058 0 -0.63533 -0.51504 -1.15037 -1.15037 -1.15037 -0.63533 0 -1.15036 0.51504 -1.15036 1.15037Z" stroke-width="1"></path><path id="Vector_2" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" d="M3.5 5.94004c0.18279 -0.34767 0.4397 -0.63502 0.74602 -0.83441 0.30632 -0.19939 0.65175 -0.30412 1.00309 -0.30412s0.69677 0.10473 1.00309 0.30412c0.30632 0.19939 0.56323 0.48674 0.74602 0.83441" stroke-width="1"></path><path id="Vector_3" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" d="M12.5 12.5c0 0.2652 -0.1054 0.5196 -0.2929 0.7071s-0.4419 0.2929 -0.7071 0.2929h-9c-0.26522 0 -0.51957 -0.1054 -0.70711 -0.2929C1.60536 13.0196 1.5 12.7652 1.5 12.5v-11c0 -0.26522 0.10536 -0.51957 0.29289 -0.707107C1.98043 0.605357 2.23478 0.5 2.5 0.5H9L12.5 4v8.5Z" stroke-width="1"></path><path id="Vector 2531" stroke="#000000" stroke-linecap="round" d="M3.5 8.5h7" stroke-width="1"></path><path id="Vector 2532" stroke="#000000" stroke-linecap="round" d="M3.5 11h4" stroke-width="1"></path>
+					</g>
+				</svg> *@
+				Ver CV
+			</a>
+		</div>
+	</div>
+</section>
