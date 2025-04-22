@@ -1,22 +1,44 @@
-﻿
+﻿using MailKit.Net.Smtp;
+using MailKit.Security;
+using Microsoft.Extensions.Options;
+using MimeKit;
+
 namespace Porfolio.Web.Services.Email;
 
 public class EmailService : IEmailService
 {
-    private readonly ILogger<EmailService> _logger;
+    private readonly EmailOptions _options;
 
-    public EmailService(ILogger<EmailService> logger)
+    public EmailService(IOptions<EmailOptions> options)
     {
-        _logger = logger;
+        _options = options.Value;
     }
 
-    public Task SendEmailAsync(string to, string subject, string body)
+    public async Task SendEmailAsync(string fromName, string fromEmail, string messageText)
     {
-        // Simulate sending an email
-        _logger.LogInformation($"Sending email to {to} with subject '{subject}' and body '{body}'");
+        var email = new MimeMessage();
+        email.From.Add(new MailboxAddress(fromName, fromEmail));
+        email.To.Add(MailboxAddress.Parse(_options.ToEmail));
+        email.Subject = "Mensaje desde el formulario de contacto";
+        email.Body = new TextPart("plain")
+        {
+            Text = messageText
+        };
 
-        // In a real application, you would use an SMTP client or an email service provider API to send the email.
-        // For example, using SmtpClient or a third-party library like MailKit.
-        return Task.CompletedTask;
+        using var smtp = new SmtpClient(); // Ensure this is MailKit.Net.Smtp.SmtpClient
+        
+        await smtp.ConnectAsync(
+            _options.SmtpHost,
+            _options.SmtpPort!,
+            SecureSocketOptions.StartTls     
+        );
+
+        await smtp.AuthenticateAsync(
+            _options.User,
+            _options.Password
+        );
+
+        await smtp.SendAsync(email);
+        await smtp.DisconnectAsync(true);
     }
 }

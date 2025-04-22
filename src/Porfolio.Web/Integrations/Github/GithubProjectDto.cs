@@ -4,8 +4,6 @@ namespace Porfolio.Web.Integrations.Github;
 
 public class GithubProjectDto
 {
-    public int Id { get; set; }
-
     public string? Name { get; set; }
 
     [JsonPropertyName("html_url")]

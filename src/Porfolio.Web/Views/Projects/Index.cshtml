@@ -4,7 +4,7 @@
 
 @model ProjectsViewModel;
 
-<p class="text-center">Proyectos en Github</p>
+<h6 class="text-center m-2">Proyectos en Github</h6>
 
 @if (Model.Projects is null)
 {
@@ -14,11 +14,11 @@
 }
 else
 {
-	@section Styles{
+	@section Styles {
 		<link rel="stylesheet" href="~/css/section/projects.css">
 	}
 
-	<div class="row justify-content-end mb-2">
+	<div class="row justify-content-end mb-3">
 		<div class="col-auto">
 			<a asp-action="ReloadFromGithub" class="btn btn-sm btn-outline-secondary">
 				<i class="bi bi-arrow-clockwise"></i> Actualizar proyectos desde Github
@@ -26,19 +26,19 @@ else
 		</div>
 	</div>
 
-	<div class="row row-cols-lg-auto gap-3">
+	<div class="row justify-content-start g-3">
 		@foreach (var project in Model.Projects!)
 		{
-			<div class="col-sm-6 col-md-4 col-lg-3 d-flex">
+			<div class="col-12 col-sm-6 col-md-4 col-lg-3 d-flex" style="width: 380px">
+				<div class="project-card w-100 d-flex flex-column justify-content-between p-4 rounded-4 shadow bg-white border">
+					<div class="d-flex justify-content-between align-items-start mb-2">
+						<h5 class="mb-0 fw-bold">@project.Name</h5>
+						<small class="text-muted">Actualizado el @(project.UpdatedAt?.ToString("dd/MM/yyyy") ?? "Fecha no disponbile")</small>
+					</div>
 
-				<div class="project-card shadow p-4 rounded-4 bg-white border w-100 d-flex flex-column gap-2">
+					<p class="text-muted small">@(project.Description ?? "Sin descripción")</p>
 
-					<h5 class="mb-0 fw-bold">@project.Name</h5>
-
-					<p class="text-muted small flex-grow-1">@(project.Description ?? "Sin descripción")</p>
-
-
-					<div class="d-flex flex-wrap gap-1 mb-3">
+					<div class="d-flex flex-wrap justify-content-end gap-1 mb-3">
 						@foreach (var language in project.Languages!)
 						{
 							string langClass = language.ToLower() switch
@@ -53,15 +53,13 @@ else
 						}
 					</div>
 
-					<small class="text-end text-muted mb-2	">Actualizado el @(project.UpdatedAt?.ToString("dd/MM/yyyy") ?? "Fecha no disponible")</small>
-
-
 					<div class="d-flex justify-content-end">
-						<a href="@project.HtmlUrl" class="btn btn-primary btn-sm mt-auto" target="_blank">Ir al repositorio</a>
+						<a href="@project.HtmlUrl" class="btn btn-outline-dark btn-sm mt-auto" target="_blank">Ir al repositorio</a>
 					</div>
 				</div>
 			</div>
 		}
 	</div>
+
 
 }
