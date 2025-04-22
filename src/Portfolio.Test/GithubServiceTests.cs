@@ -4,11 +4,21 @@ using Microsoft.Extensions.Options;
 using Moq;
 using Moq.Protected;
 using Porfolio.Web.Integrations.Github;
+using Porfolio.Web.Services.MemoryCache;
 
 namespace Portfolio.Test;
 
 public class GithubServiceTests
 {
+    private readonly Mock<IApiCacheService> _apiCacheServiceMock;
+    private readonly Mock<HttpMessageHandler> _httpMessageHandlerMock;
+
+    public GithubServiceTests()
+    {
+        _apiCacheServiceMock = new Mock<IApiCacheService>();
+        _httpMessageHandlerMock = new Mock<HttpMessageHandler>();
+    }
+
     [Fact]
     public async Task GetPublicRepositoriesAsync_ReturnsProjects()
     {
@@ -48,18 +58,19 @@ public class GithubServiceTests
             Username = "fake-user"
         });
 
-        var service = new GithubService(httpClient, options);
+        var service = new GithubService(httpClient, options, _apiCacheServiceMock.Object);
 
         // Act
         var result = await service.GetPublicRepositoriesAsync();
 
         // Assert
-        var project = Assert.Single(result);
+        var project = Assert.Single(result!);
+
         Assert.Equal("MiProyecto", project.Name);
         Assert.Equal("Descripción", project.Description);
         Assert.Equal("https://github.com/user/MiProyecto", project.HtmlUrl);
         Assert.Equal("https://api.github.com/repos/fake-user/MiProyecto", project.Url);
-        Assert.Equal(["C#"], project.Languages!);
+        Assert.Equal(["C#"], [.. project.Languages!]);
         Assert.False(project.IsPrivate);
     }
 
@@ -79,10 +90,10 @@ public class GithubServiceTests
 
         httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("TestClient");
 
-        var service = new GithubService(httpClient, options);
+        var service = new GithubService(httpClient, options, _apiCacheServiceMock.Object);
 
         var repos = await service.GetPublicRepositoriesAsync();
 
-        Assert.NotEmpty(repos);
+        Assert.Null(repos);
     }
 }

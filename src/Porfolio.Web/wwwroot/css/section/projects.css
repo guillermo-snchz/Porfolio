@@ -1,0 +1,24 @@
+﻿.tech-badge {
+    padding: 5px 10px;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: white;
+}
+
+.tech-css {
+    background-color: #264de4;
+}
+
+.tech-javascript {
+    background-color: #f0db4f;
+    color: #323330;
+}
+
+.tech-html {
+    background-color: #e34c26;
+}
+
+.tech-csharp {
+    background-color: #68217a;
+}
