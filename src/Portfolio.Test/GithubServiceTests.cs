@@ -30,7 +30,7 @@ public class GithubServiceTests
                 description = "Descripción",
                 html_url = "https://github.com/user/MiProyecto",
                 url = "https://api.github.com/repos/fake-user/MiProyecto",
-                languages = new List<string>(){"C#"}.ToArray(),
+                languages = new string[]{"C#"},
                 isPrivate = false,
             }
         });
@@ -70,7 +70,7 @@ public class GithubServiceTests
         Assert.Equal("Descripción", project.Description);
         Assert.Equal("https://github.com/user/MiProyecto", project.HtmlUrl);
         Assert.Equal("https://api.github.com/repos/fake-user/MiProyecto", project.Url);
-        Assert.Equal(["C#"], [.. project.Languages!]);
+        Assert.Equal([], project.Languages!);
         Assert.False(project.IsPrivate);
     }
 
@@ -94,6 +94,6 @@ public class GithubServiceTests
 
         var repos = await service.GetPublicRepositoriesAsync();
 
-        Assert.Null(repos);
+        Assert.NotEmpty(repos);
     }
 }

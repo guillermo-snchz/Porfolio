@@ -1,4 +1,9 @@
-﻿.tech-badge {
+﻿.project-card {
+    min-height: 100%; /* Forzado por d-flex de columna */
+    aspect-ratio: 4 / 3; /* opcional: cuadrado o proporción visual */
+}
+
+.tech-badge {
     padding: 5px 10px;
     border-radius: 12px;
     font-size: 0.85rem;

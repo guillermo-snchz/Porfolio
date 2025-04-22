@@ -1,4 +1,5 @@
 using Porfolio.Web.Integrations.Github;
+using Porfolio.Web.Services.Email;
 using Porfolio.Web.Services.MemoryCache;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,11 +8,14 @@ builder.Services.AddMemoryCache();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.Configure<GithubOptions>(builder.Configuration.GetSection("GitHub"));
+
 builder.Services.AddHttpClient<IGithubService, GithubService>();
+builder.Services.Configure<GithubOptions>(builder.Configuration.GetSection("GitHub"));
+
+builder.Services.Configure<EmailOptions>(builder.Configuration.GetSection("EmailSettings"));
+builder.Services.AddTransient<IEmailService, EmailService>();
 
 builder.Services.AddSingleton<IApiCacheService, ApiMemoryCacheService>();
-
 
 var app = builder.Build();
 
