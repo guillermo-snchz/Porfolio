@@ -27,26 +27,11 @@ a {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Botones personalizados (puedes extender si quieres más colores) */
-.btn-primary {
-    background-color: #0d6efd;
-    border-color: #0d6efd;
-}
-
-    .btn-primary:hover {
-        background-color: #0b5ed7;
-        border-color: #0a58ca;
-    }
-
 /* Footer */
 .site-footer a {
     color: #ffffff;
     text-decoration: none;
 }
-
-    .site-footer a:hover {
-        text-decoration: underline;
-    }
 
 /* Responsive fix: centrado en pantallas pequeñas */
 @media (max-width: 576px) {
@@ -57,4 +42,14 @@ a {
         .navbar-nav .nav-item {
             margin-bottom: 0.5rem;
         }
+}
+
+
+.bg-primary-color {
+    background-color: #876cf1
+}
+
+
+a:hover {
+    text-decoration: none
 }

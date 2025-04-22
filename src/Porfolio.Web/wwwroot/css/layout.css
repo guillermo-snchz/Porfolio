@@ -16,6 +16,13 @@
     }
 
 
+/*Ancho fijo del navbar brand para que al cambiar el texto no se mueva todo el nav*/
+.navbar-brand {
+    width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
 
 footer {
     background-color: #333;

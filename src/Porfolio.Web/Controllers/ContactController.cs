@@ -10,6 +10,7 @@ public class ContactController : Controller
     {
         _logger = logger;
     }
+
     public IActionResult Index()
     {
         return View();
