@@ -1,3 +1,44 @@
 ﻿@{
 	ViewData["Title"] = "Proyectos";
 }
+
+@model ProjectsViewModel;
+
+<p class="text-center">Proyectos en Github</p>
+
+@if (Model.Projects is null)
+{
+	<div class="d-flex justify-content-center align-items-center vh-50">
+		<h6 class="text-center">No se pudieron obtener los proyectos de Github.</h6>
+	</div>
+}
+else
+{
+	<div class="row row-cols-lg-auto gap-3">
+		@foreach (var project in Model.Projects!)
+		{
+			<div class="col">
+				<div class="card">
+					<div class="card-body">
+						<div class="d-flex flex-row">
+							<h5 class="card-title">@project.Name</h5>
+							<span>Última actualización: @project.UpdatedAt</span>
+						</div>
+						<div class="d-flex flex-column gap-2">
+							<p class="card-text">@project.Description</p>
+
+							<div class="d-flex flex-wrap gap-1">
+								@foreach (var language in project.Languages!)
+								{
+									<language-badge language="@language" />
+								}
+							</div>
+
+							<a href="@project.HtmlUrl" class="btn btn-primary btn-sm align-self-end" target="_blank">Ir al repositorio</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		}
+	</div>
+}

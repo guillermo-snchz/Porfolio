@@ -1,7 +1,11 @@
+using Porfolio.Web.Integrations.Github;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.Configure<GithubOptions>(builder.Configuration.GetSection("GitHub"));
+builder.Services.AddHttpClient<IGithubService, GithubService>();
 
 var app = builder.Build();
 
