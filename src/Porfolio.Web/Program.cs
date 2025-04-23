@@ -9,7 +9,6 @@ builder.Services.AddMemoryCache();
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-// Fix: Pass the correct type of argument to AddServices
 builder.Services.AddServices(builder);
 
 builder.Services.AddRepositories();
@@ -37,10 +36,13 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
 
-app.MapEasyData(options =>
+if(app.Environment.IsDevelopment())
 {
-    options.UseDbContext<PortfolioContext>();
-});
+    app.MapEasyData(options =>
+    {
+        options.UseDbContext<PortfolioContext>();
+    });
+}
 
 using (var scope = app.Services.CreateScope())
 {
