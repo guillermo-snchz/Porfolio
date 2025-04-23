@@ -12,4 +12,11 @@ public static class Tools
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase
         };
     }
+
+    public static string DateTimeConverterToCvDate(DateTime? date)
+    {
+        if(date == null) return string.Empty;
+
+        return date?.ToString("MMM yyyy", System.Globalization.CultureInfo.InvariantCulture)!;
+    }
 }

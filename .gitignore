@@ -118,3 +118,5 @@ _ReSharper.Caches/
 # Others
 *.tlog
 *.lastbuildstate
+*.db-shm
+*.db-wal

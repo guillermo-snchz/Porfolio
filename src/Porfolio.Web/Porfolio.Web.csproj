@@ -14,8 +14,19 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="EasyData.AspNetCore" Version="1.5.8" />
+    <PackageReference Include="EasyData.EntityFrameworkCore.Relational" Version="1.5.8" />
     <PackageReference Include="MailKit" Version="4.11.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="9.0.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.4">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="MimeKit" Version="4.11.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Views\Shared\Components\" />
   </ItemGroup>
 
 </Project>
