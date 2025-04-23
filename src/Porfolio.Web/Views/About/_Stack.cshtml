@@ -1,0 +1,39 @@
+﻿@using Porfolio.Web.Data.Models
+@model IEnumerable<Stack>
+
+<style>
+	.table-wrapper {
+		max-height: 300px;
+		overflow: auto;
+		display: inline-block;
+	}
+</style>
+
+<div class="card p-4">
+	<h5 class="fw-bold mb-4">Stack tecnológico</h5>
+	<div class="table-wrapper">
+		<table class="table table-sm table-borderless align-middle">
+			<tbody>
+				@foreach (var tech in Model)
+				{
+					<tr>
+						<td class="fw-medium">@tech.Nombre</td>
+						<td>
+							@for (int i = 1; i <= 5; i++)
+							{
+								if (i <= tech.Nivel)
+								{
+									<i class="bi bi-star-fill text-warning"></i> <!-- estrella llena -->
+								}
+								else
+								{
+									<i class="bi bi-star text-muted"></i> <!-- estrella vacía -->
+								}
+							}
+						</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+	</div>
+</div>

@@ -1,6 +1,6 @@
-using Porfolio.Web.Integrations.Github;
-using Porfolio.Web.Services.Email;
-using Porfolio.Web.Services.MemoryCache;
+using EasyData.Services;
+using Porfolio.Web.Core;
+using Porfolio.Web.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,13 +9,11 @@ builder.Services.AddMemoryCache();
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddHttpClient<IGithubService, GithubService>();
-builder.Services.Configure<GithubOptions>(builder.Configuration.GetSection("GitHub"));
+// Fix: Pass the correct type of argument to AddServices
+builder.Services.AddServices(builder);
 
-builder.Services.Configure<EmailOptions>(builder.Configuration.GetSection("EmailSettings"));
-builder.Services.AddTransient<IEmailService, EmailService>();
-
-builder.Services.AddSingleton<IApiCacheService, ApiMemoryCacheService>();
+builder.Services.AddRepositories();
+builder.Services.AddPorfolioDbContext(builder.Configuration);
 
 var app = builder.Build();
 
@@ -38,5 +36,16 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
+
+app.MapEasyData(options =>
+{
+    options.UseDbContext<PortfolioContext>();
+});
+
+using (var scope = app.Services.CreateScope())
+{
+    var scopedServices = scope.ServiceProvider;
+    SeedData.InitializeData(scopedServices);
+}
 
 app.Run();
