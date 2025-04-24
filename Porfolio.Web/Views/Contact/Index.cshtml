@@ -22,24 +22,24 @@
 <form asp-action="SendEmail" method="post" class="p-3">
 	<div class="mb-3">
 		<label asp-for="Nombre" class="form-label"></label>
-		<input asp-for="Nombre" class="form-control" />
+		<input asp-for="Nombre" class="form-control" disabled />
 		<span asp-validation-for="Nombre" class="text-danger"></span>
 	</div>
 
 	<div class="mb-3">
 		<label asp-for="Email" class="form-label"></label>
-		<input asp-for="Email" class="form-control" />
+		<input asp-for="Email" class="form-control" disabled />
 		<span asp-validation-for="Email" class="text-danger"></span>
 	</div>
 
 	<div class="mb-3">
 		<label asp-for="Mensaje" class="form-label"></label>
-		<textarea asp-for="Mensaje" class="form-control" rows="4"></textarea>
+		<textarea asp-for="Mensaje" class="form-control" rows="4" disabled></textarea>
 		<span asp-validation-for="Mensaje" class="text-danger"></span>
 	</div>
 
 	<div class="d-flex justify-content-end">
-		<button type="submit" class="btn btn-outline-dark" id="submitBtn">
+		<button type="submit" class="btn btn-outline-dark" id="submitBtn" disabled>
 			<span id="submitText">Enviar</span>
 			<span id="submitSpinner" class="spinner-border spinner-border-sm d-none ms-2" role="status" aria-hidden="true"></span>
 		</button>

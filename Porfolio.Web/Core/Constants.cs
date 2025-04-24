@@ -2,6 +2,6 @@
 
 public class Constants
 {
-    public static readonly string URL_CV_ES = "https://drive.google.com/file/d/1IUPrDJTf-NbsGJIRmAZ-JVgJKftuOEQ6/view?usp=drive_link";
-    public static readonly string URL_CV_EN = "https://drive.google.com/file/d/1ITIp3y17oIntnpIFL8oqi8Txn35O8qoV/view?usp=drive_link";
+    public static readonly string URL_CV_ES = "https://drive.google.com/file/d/17b_9BcAfQNIdIoTRqx-dZHiXt_S19zGt/view?usp=drive_link";
+    public static readonly string URL_CV_EN = "https://drive.google.com/file/d/150MNkPaozU0JMuAWuyXRbSo2Bgrs81QK/view?usp=drive_link";
 }

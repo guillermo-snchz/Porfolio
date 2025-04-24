@@ -56,3 +56,17 @@
         font-size: 1rem;
         line-height: 1.6;
     }
+
+@media (max-width: 768px) {
+    .profile-image {
+        display: none;
+    }
+
+    .profile-card {
+        grid-template-columns: 1fr; /* Una sola columna */
+    }
+
+    .profile-info {
+        padding: 2rem; /* Asegúrate de que el contenido tenga suficiente espacio */
+    }
+}
