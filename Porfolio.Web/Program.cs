@@ -4,14 +4,6 @@ using Porfolio.Web.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Configurar Kestrel para escuchar en el puerto 8080
-
-
-//builder.WebHost.ConfigureKestrel(serverOptions =>
-//{
-//    serverOptions.ListenAnyIP(8080); // Escucha en 0.0.0.0:8080
-//});
-
 builder.Services.AddMemoryCache();
 
 // Add services to the container.
