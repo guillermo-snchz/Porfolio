@@ -11,6 +11,9 @@ public static class SeedData
         using var context = new PortfolioContext(
             serviceProvider.GetRequiredService<DbContextOptions<PortfolioContext>>());
 
+        //run migrations
+        context.Database.Migrate();
+
         if (context.Estudios.Any()) return;
 
         context.Estudios.AddRange(
